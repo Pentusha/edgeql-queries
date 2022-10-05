@@ -41,10 +41,7 @@ def load_query_data_from_edgeql(edgeql: str) -> List[Query]:
     query_data = []
     matches_iter = _iter_pairs(QUERY_DEFINITION_PATTERN.finditer(edgeql))
     for (start_match, end_match) in matches_iter:
-        if end_match is not None:
-            end_position = end_match.start()
-        else:
-            end_position = len(edgeql)
+        end_position = end_match.start() if end_match is not None else len(edgeql)
         query_data.append(
             parse_query_from_string(
                 start_match.groups()[0],
